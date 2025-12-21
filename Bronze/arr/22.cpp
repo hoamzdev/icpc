@@ -16,21 +16,21 @@ int dx[8] = {-1,-1,-1,0,1,1,1,0};
 int dy[8] = {-1,0,1,1,1,0,-1,-1};
 
 
-
 void solve(){
     int n;cin >> n;
-    int a[n];
-    FOR0(i,n) cin >> a[i];
-    
-    int i = 1;
-    while(i < n && a[i] > a[i - 1]) i++;
-    if(i == n || i == 1) {
-        cout << "NO";
-        return;
+    int a[2 * n + 1];
+    FOR1(i,n) {
+        cin >> a[i];
+        a[i + n] = a[i];
     }
-    while(i < n && a[i] < a[i-1]) i++;
-    if(i == n) cout << "YES";
-    else cout << "NO";
+    int min1 = 0;
+    int min2 = 0;
+
+    int x,y;cin >> x >> y;
+    if(x > y) swap(x,y);
+    for(int i=x;i<y;i++) min1 += a[i];
+    for(int i = y;i<n + x;i++) min2 += a[i];
+    cout << min(min1,min2);
 }
 
 int main(){
