@@ -39,7 +39,6 @@ string shortestPalindrome(string s) {
     
     for(int len = n;len >= 1;len --){
         int mid = len / 2;
-        cout << len << " " << s.substr(1,len) << endl;
         if(len & 1){
             //le
             ll l = getHash(f,1,mid);
