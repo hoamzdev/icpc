@@ -5,6 +5,7 @@ using namespace std;
 #define vll vector<ll>
 #define fi first
 #define se second
+#define ull unsigned long long
 #define all(v) v.begin(),v.end()
 typedef long long ll;
 const ll N=1e6+5;
@@ -12,35 +13,27 @@ const ll mod=1e9+7;
 const ll modr=1e9+9;
 
 
-int trace[N];
 
 void solve(){
-    int n,k;cin >> n >> k;
+    int n,x;cin >> n >> x;
     vi a(n + 1,0);
-    vll f(n + k + 1,mod);
-    
     for(int i=1;i<=n;i++) cin >> a[i];
-    f[1] = 0;
+    int dp[x + 1];//dp[i] : so cach co duoc tong tien  = i
+    memset(dp,0,sizeof(dp));
 
-    for(int i=1;i<=n;i++){
-        for(int j=1;j<=k;j++){
-            if(f[i + j] > f[i] + abs(a[i + j] - a[i])){
-                f[i + j] = f[i] + abs(a[i + j] - a[i]);
-                trace[i + j] = i;
+    dp[0] = 1;//co 1 cach co dc tong tien = 0;
+    for(int i=1;i<=x;i++){
+        for(int j = 1;j<=n;j++){
+            if(i >= a[j]){
+                dp[i] += dp[i - a[j]];
+                dp[i] %= mod;
             }
         }
     }
-    cout << f[n] << endl;
-    vi res;
-    int pos = n;
-    while(pos != 1){
-        res.push_back(pos);
-        pos = trace[pos];
-    }
-    res.push_back(1);
-    reverse(all(res));
-    for(int i : res) cout << i << ' ';
+    cout << dp[x];
 }
+
+//acc
 
 int main(){
     freopen("in.txt", "r", stdin);
