@@ -27,27 +27,13 @@ struct Mt{
         memset(d,0,sizeof(d));
     }
 
-    Mt operator + (const Mt &a) const{
-        Mt res(m,n);
-        rep(i,0,m-1){
-            rep(j,0,n-1){
-                res.d[i][j] = d[i][j] + a.d[i][j];
-                if(res.d[i][j] >= mod) res.d[i][j] -= mod;
-            }
-        }
-        return res;
-    }
-
     Mt operator * (const Mt &a) const{
         int x = m,y = n,z = a.n;
         Mt res(x,z);
         rep(i,0,x-1){
             rep(j,0,y){
                 rep(k,0,z - 1){
-                    res.d[i][k] += 1ll * d[i][j] * a.d[j][k];
-                    if(res.d[i][j] >= 1ll * mod * mod){
-                        res.d[i][j] -= 1ll * mod * mod;
-                    }
+                    res.d[i][k] = (res.d[i][k] + 1ll * d[i][j] * a.d[j][k]) % mod;
                 }
             }
         }
@@ -70,20 +56,53 @@ struct Mt{
 
 
 void solve(){
-    ll n;cin >> n;
-    Mt A = Mt(2,2);
-    A.d[0][0] = 0;
-    A.d[0][1] = 1;
-    A.d[1][0] = 1;
-    A.d[1][1] = 1;
+    // ll n;cin >> n;
+    // Mt A = Mt(2,2);
+    // A.d[0][0] = 0;
+    // A.d[0][1] = 1;
+    // A.d[1][0] = 1;
+    // A.d[1][1] = 1;
 
-    Mt v0 = Mt(1,2);
-    v0.d[0][0] = 0;
-    v0.d[0][1] = 1;
+    // Mt v0 = Mt(1,2);
+    // v0.d[0][0] = 0;
+    // v0.d[0][1] = 1;
 
-    Mt res = v0 * (A ^ n);
-    cout << res.d[0][0];
+    // Mt res = v0 * (A ^ n);
+    // cout << res.d[0][0];
     
+    int n;cin >> n;
+
+    Mt a = Mt(4,4);
+
+    a.d[0][0] = 0;
+    a.d[0][1] = 3;
+    a.d[0][2] = 0;
+    a.d[0][3] = 0;
+
+    a.d[1][0] = 1;
+    a.d[1][1] = 0;
+    a.d[1][2] = 2;
+    a.d[1][3] = 0;
+
+    a.d[2][0] = 0;
+    a.d[2][1] = 2;
+    a.d[2][2] = 0;
+    a.d[2][3] = 1;
+
+    a.d[3][0] = 0;
+    a.d[3][1] = 0;
+    a.d[3][2] = 3;
+    a.d[3][3] = 0;
+
+    Mt t = Mt(1,4);
+    t.d[0][0] = 1;//dang o nhom 0
+    t.d[0][1] = 0;
+    t.d[0][2] = 0;
+    t.d[0][3] = 0;
+
+    Mt res = t * (a ^ n);
+    cout << res.d[0][3] << endl;
+
 }
 
 int main(){
